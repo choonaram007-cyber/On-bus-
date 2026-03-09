@@ -1,0 +1,179 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Create Android project structure
+        run: |
+          mkdir -p android/app/src/main/assets
+          mkdir -p android/app/src/main/java/com/onbus/app
+          mkdir -p android/gradle/wrapper
+          mkdir -p android/app/src/main/res/values
+      
+      - name: Copy web files to Android assets
+        run: |
+          # अगर आपके पास HTML फाइलें हैं तो यह काम करेगा
+          if [ -f "index.html" ]; then
+            cp index.html android/app/src/main/assets/ 2>/dev/null || :
+            cp *.css android/app/src/main/assets/ 2>/dev/null || :
+            cp *.js android/app/src/main/assets/ 2>/dev/null || :
+          else
+            echo "No HTML files found, skipping..."
+          fi
+      
+      - name: Create AndroidManifest.xml
+        run: |
+          cat > android/app/src/main/AndroidManifest.xml << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+              package="com.onbus.app">
+              <uses-permission android:name="android.permission.INTERNET" />
+              <application
+                  android:allowBackup="true"
+                  android:label="ON BUS"
+                  android:usesCleartextTraffic="true">
+                  <activity android:name=".MainActivity" android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+                  </activity>
+              </application>
+          </manifest>
+          EOF
+      
+      - name: Create MainActivity.java
+        run: |
+          cat > android/app/src/main/java/com/onbus/app/MainActivity.java << 'EOF'
+          package com.onbus.app;
+          import android.os.Bundle;
+          import android.webkit.WebView;
+          import android.webkit.WebViewClient;
+          import androidx.appcompat.app.AppCompatActivity;
+          public class MainActivity extends AppCompatActivity {
+              @Override
+              protected void onCreate(Bundle savedInstanceState) {
+                  super.onCreate(savedInstanceState);
+                  WebView webView = new WebView(this);
+                  setContentView(webView);
+                  webView.getSettings().setJavaScriptEnabled(true);
+                  webView.loadUrl("file:///android_asset/index.html");
+              }
+          }
+          EOF
+      
+      - name: Create strings.xml
+        run: |
+          cat > android/app/src/main/res/values/strings.xml << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <string name="app_name">ON BUS</string>
+          </resources>
+          EOF
+      
+      - name: Create settings.gradle
+        run: |
+          cat > android/settings.gradle << 'EOF'
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+          rootProject.name = "ONBUS"
+          include ':app'
+          EOF
+      
+      - name: Create build.gradle (project)
+        run: |
+          cat > android/build.gradle << 'EOF'
+          plugins {
+              id 'com.android.application' version '8.2.0' apply false
+          }
+          EOF
+      
+      - name: Create build.gradle (app)
+        run: |
+          cat > android/app/build.gradle << 'EOF'
+          plugins {
+              id 'com.android.application'
+          }
+          android {
+              namespace 'com.onbus.app'
+              compileSdk 34
+              defaultConfig {
+                  applicationId "com.onbus.app"
+                  minSdk 21
+                  targetSdk 34
+                  versionCode 1
+                  versionName "1.0"
+              }
+              buildTypes {
+                  release {
+                      minifyEnabled false
+                      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+                  }
+              }
+              compileOptions {
+                  sourceCompatibility JavaVersion.VERSION_17
+                  targetCompatibility JavaVersion.VERSION_17
+              }
+          }
+          dependencies {
+              implementation 'androidx.appcompat:appcompat:1.6.1'
+          }
+          EOF
+      
+      - name: Create gradle-wrapper.properties
+        run: |
+          cat > android/gradle/wrapper/gradle-wrapper.properties << 'EOF'
+          distributionBase=GRADLE_USER_HOME
+          distributionPath=wrapper/dists
+          distributionUrl=https\://services.gradle.org/distributions/gradle-8.2-bin.zip
+          zipStoreBase=GRADLE_USER_HOME
+          zipStorePath=wrapper/dists
+          EOF
+      
+      - name: Download gradle wrapper
+        run: |
+          cd android
+          curl -L -o gradle-wrapper.jar https://github.com/gradle/gradle/raw/master/gradle/wrapper/gradle-wrapper.jar
+          echo "#!/bin/sh" > gradlew
+          echo "exec java -cp gradle-wrapper.jar org.gradle.wrapper.GradleWrapperMain \"\$@\"" >> gradlew
+          chmod +x gradlew
+          cd ..
+      
+      - name: Build APK
+        run: |
+          cd android
+          ./gradlew assembleRelease || true
+          cd ..
+      
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: on-bus-app
+          path: android/app/build/outputs/apk/release/app-release.apk
