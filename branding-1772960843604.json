@@ -1,0 +1,145 @@
+{
+  "colorScheme": "dark",
+  "fonts": [
+    {
+      "family": "Hind",
+      "role": "body"
+    },
+    {
+      "family": "Outfit",
+      "role": "heading"
+    }
+  ],
+  "colors": {
+    "primary": "#FF9F1A",
+    "accent": "#FF9F1A",
+    "background": "#09090B",
+    "textPrimary": "#09090B",
+    "link": "#9CA3AF"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Hind",
+      "heading": "Outfit"
+    },
+    "fontStacks": {
+      "heading": [
+        "Outfit",
+        "sans-serif"
+      ],
+      "body": [
+        "Hind",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Hind",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "36px",
+      "h2": "18px",
+      "body": "14px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "9px"
+  },
+  "components": {
+    "input": {
+      "background": "#09090B",
+      "textColor": "#FAFAFA",
+      "borderColor": "#242429",
+      "borderRadius": "12px",
+      "borderRadiusCorners": {
+        "topLeft": "12px",
+        "topRight": "12px",
+        "bottomRight": "12px",
+        "bottomLeft": "12px"
+      },
+      "shadow": "none"
+    },
+    "buttonPrimary": {
+      "background": "#FF9F1A",
+      "textColor": "#09090B",
+      "borderColor": "#09090B",
+      "borderRadius": "12px",
+      "borderRadiusCorners": {
+        "topLeft": "12px",
+        "topRight": "12px",
+        "bottomRight": "12px",
+        "bottomLeft": "12px"
+      },
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 159, 26, 0.25) 0px 10px 15px -3px, rgba(255, 159, 26, 0.25) 0px 4px 6px -4px"
+    },
+    "buttonSecondary": {
+      "background": "#0D0D10",
+      "textColor": "#FAFAFA",
+      "borderColor": "#151517",
+      "borderRadius": "12px",
+      "borderRadiusCorners": {
+        "topLeft": "12px",
+        "topRight": "12px",
+        "bottomRight": "12px",
+        "bottomLeft": "12px"
+      },
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px"
+    }
+  },
+  "images": {
+    "logo": "File saved at: attached_assets/logo.svg",
+    "favicon": "https://bus-tracker-pro--choona2907.replit.app/favicon.png",
+    "ogImage": null,
+    "logoHref": "File saved at: attached_assets/logoHref.html"
+  },
+  "__llm_logo_reasoning": {
+    "selectedIndex": 0,
+    "reasoning": "Selected #0 because it is in the header, visible, and links to the homepage, which is a strong indicator of being the main brand logo.",
+    "confidence": 0.85,
+    "source": "llm"
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": 0,
+      "text": "बसें खोजें",
+      "reasoning": "Button #0 has a vibrant brand color (#FF9F1A) which stands out as the primary call-to-action, making it the most prominent button on the page."
+    },
+    "secondary": {
+      "index": 1,
+      "text": "बाड़मेर ➔ निम्बड़ी",
+      "reasoning": "Button #1 is from a different color group (#0D0D10) and serves as a secondary option with a less vibrant background."
+    },
+    "confidence": 0.95
+  },
+  "personality": {
+    "tone": "modern",
+    "energy": "medium",
+    "targetAudience": "commuters and travelers"
+  },
+  "designSystem": {
+    "framework": "tailwind",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0.95,
+    "colors": 0.9,
+    "overall": 0.925
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": true,
+      "llmSucceeded": true,
+      "finalSource": "llm",
+      "rawLogoSelection": {
+        "selectedLogoIndex": 0,
+        "selectedLogoReasoning": "Selected #0 because it is in the header, visible, and links to the homepage, which is a strong indicator of being the main brand logo.",
+        "confidence": 0.85
+      }
+    },
+    "buttonClassification": {
+      "llmCalled": true,
+      "llmSucceeded": true
+    }
+  }
+}

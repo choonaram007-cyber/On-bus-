@@ -1,0 +1,90 @@
+{
+  "stations": {
+    "barmer_stand": {
+      "name": "बाड़मेर बस स्टैंड",
+      "city": "बाड़मेर",
+      "lat": 25.7510,
+      "lng": 71.4116,
+      "searchTerms": ["barmer", "बाड़मेर", "बाडमेर"]
+    },
+    "chouhtan_stand": {
+      "name": "चौहटन बस स्टैंड",
+      "city": "चौहटन",
+      "lat": 25.8768,
+      "lng": 71.8925,
+      "searchTerms": ["chouhtan", "चौहटन"]
+    },
+    "nimbdi": {
+      "name": "निम्बड़ी",
+      "city": "बाड़मेर",
+      "lat": 25.6137,
+      "lng": 71.2818,
+      "searchTerms": ["nimbdi", "निम्बड़ी"]
+    },
+    "taratra": {
+      "name": "तारात्रा",
+      "city": "बाड़मेर",
+      "lat": 25.5918,
+      "lng": 71.2334,
+      "searchTerms": ["taratra", "तारात्रा"]
+    }
+  },
+  "routes": {
+    "route_barmer_chouhtan": {
+      "name": "बाड़मेर-चौहटन रूट",
+      "fromStation": "barmer_stand",
+      "toStation": "chouhtan_stand",
+      "totalDistance": "60 किमी",
+      "forwardTravelTime": "2h 0m",
+      "returnTravelTime": "2h 0m",
+      "stops": [
+        { "stationId": "barmer_stand", "distance": "0 किमी" },
+        { "stationId": "nimbdi", "distance": "20 किमी" },
+        { "stationId": "taratra", "distance": "40 किमी" },
+        { "stationId": "chouhtan_stand", "distance": "60 किमी" }
+      ]
+    }
+  },
+  "buses": {
+    "jodha_baba": {
+      "busNumber": "RJ19-Pd-1761",
+      "busName": "जोधा बाबा",
+      "busCode": "PVT",
+      "type": "नॉन-AC बस",
+      "fare": "₹60",
+      "totalSeats": 52,
+      "amenities": ["सामान्य सीटें", "सामान"],
+      "routeId": "route_barmer_chouhtan",
+      "fromStation": "barmer_stand",
+      "toStation": "chouhtan_stand",
+      "crowd": "मध्यम",
+      "availableSeats": 40,
+      "trips": [
+        {
+          "id": "t1",
+          "departure": "09:30",
+          "arrival": "11:30",
+          "direction": "forward",
+          "isReturnTrip": false,
+          "delay": 0
+        },
+        {
+          "id": "t2",
+          "departure": "13:00",
+          "arrival": "15:00",
+          "direction": "return",
+          "isReturnTrip": true,
+          "delay": 0
+        },
+        {
+          "id": "t3",
+          "departure": "16:30",
+          "arrival": "18:30",
+          "direction": "forward",
+          "isReturnTrip": false,
+          "delay": 10
+        }
+      ]
+    }
+  }
+}
